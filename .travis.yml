@@ -1,0 +1,23 @@
+sudo: required
+services:
+  - docker
+
+before_install:
+  - docker build -t kingo4luv/react-test -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run kingo4luv/react-test npm test -- --coverage
+
+after_success:
+    - docker build -t kingo4luv/multi-client ./client
+    - docker build -t kingo4luv/multi-nginx ./nginx
+    - docker build -t kingo4luv/multi-server ./server
+    - docker build -t kingo4luv/multi-worker ./worker
+
+- echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password_stdin
+
+- docker push kingo4luv/multi-client
+- docker push kingo4luv/multi-nginx
+- docker push kingo4luv/multi-server
+- docker push kingo4luv/multi-worker
+
