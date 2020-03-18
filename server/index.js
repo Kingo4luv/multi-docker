@@ -10,7 +10,6 @@ const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 
-//Postgress clinet setup
 const { Pool } = require("pg");
 const pgClient = new Pool({
   user: keys.pgUser,
