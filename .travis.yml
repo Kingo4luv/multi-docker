@@ -1,8 +1,5 @@
 sudo: required
-
-language: node_js
-node_js:
-  - 10
+language: generic
 
 services:
   - docker
@@ -14,10 +11,10 @@ script:
   - docker run -e CI=true kingo4luv/multi-docker npm test
 
 after_success:
-    - docker build -t kingo4luv/multi-client ./client
-    - docker build -t kingo4luv/multi-nginx ./nginx
-    - docker build -t kingo4luv/multi-server ./server
-    - docker build -t kingo4luv/multi-worker ./worker
+  - docker build -t kingo4luv/multi-client ./client
+  - docker build -t kingo4luv/multi-nginx ./nginx
+  - docker build -t kingo4luv/multi-server ./server
+  - docker build -t kingo4luv/multi-worker ./worker
 
 - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password_stdin
 
