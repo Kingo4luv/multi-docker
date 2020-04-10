@@ -5,13 +5,13 @@ services:
   - docker
 
 before_install:
-  - docker build -t kingo4luv/react-test -f ./client/Dockerfile.dev ./client
+  - docker build -t kingo4luv/react-test -f ./frontend/Dockerfile.dev ./frontend
 
 script:
   - docker run -e CI=true kingo4luv/react-test npm test
 
 after_success:
-  - docker build -t kingo4luv/multi-client ./client
+  - docker build -t kingo4luv/multi-client ./frontend
   - docker build -t kingo4luv/multi-nginx ./nginx
   - docker build -t kingo4luv/multi-server ./server
   - docker build -t kingo4luv/multi-worker ./worker
